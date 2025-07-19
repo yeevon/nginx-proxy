@@ -1,0 +1,24 @@
+services:
+  nginx:
+    image: nginx:1.25-alpine
+    container_name: nginx
+    restart: unless-stopped
+    labels:
+      - "project=reverse-proxy"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/ssl:/etc/letsencrypt # for SSL certs
+      - ./nginx/ssl-dhparams:/etc/ssl/certs # for dhparams if needed
+      - ./nginx/www:/var/www/certbot
+    depends_on:
+      - resume
+      - club
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    external: true
