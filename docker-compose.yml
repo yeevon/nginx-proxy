@@ -13,9 +13,6 @@ services:
       - ./nginx/ssl:/etc/letsencrypt # for SSL certs
       - ./nginx/ssl-dhparams:/etc/ssl/certs # for dhparams if needed
       - ./nginx/www:/var/www/certbot
-    depends_on:
-      - resume
-      - club
     networks:
       - app-network
 
